@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 const PortfolioSchema = new mongoose.Schema({
+  type: {
+    type: Number,
+    required: true,
+  },
   projectNameUz: {
     type: String,
     required: true,
