@@ -27,7 +27,7 @@ exports.uploadImage = async (req, res) => {
     });
     await newImage.save();
     return res.json({
-      id: newImage._doc._id
+      data: newImage
     })
   } catch (err) {
     return res.status(400).json({
