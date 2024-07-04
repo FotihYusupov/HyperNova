@@ -5,7 +5,7 @@ const filterByLang = require("../utils/filterByLang");
 exports.getAll = async (req, res) => {
   try {
     const data = await paginate(Vacancy, req.query, "vacancies");
-    const result = filterByLang(data.data, req.query.lang, "description");
+    const result = filterByLang(data.data, req.query.lang, "description", "title");
     data.data = result;
     return res.json(data);
   } catch (err) {
