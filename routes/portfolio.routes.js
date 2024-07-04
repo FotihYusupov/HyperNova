@@ -6,7 +6,7 @@ const portfolioRoutes = Router();
 
 portfolioRoutes.get("/", portfolioController.getAll);
 portfolioRoutes.post("/", authMiddleware, uploadMiddleware, portfolioController.addPortfolio);
-portfolioRoutes.post('/img', authMiddleware, uploadMiddleware, portfolioController.addImg);
+portfolioRoutes.post('/img', uploadMiddleware, portfolioController.addImg);
 portfolioRoutes.put("/:id", authMiddleware, uploadMiddleware, portfolioController.updatePortfolio);
 portfolioRoutes.delete("/:id", authMiddleware, portfolioController.deletePortfolio);
 
