@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
 const VacancySchema = new mongoose.Schema({
-  title: {
+  titleUz: {
+    type: String,
+    required: true,
+  },
+   titleEn: {
+    type: String,
+    required: true,
+  },
+   titleRu: {
     type: String,
     required: true,
   },
