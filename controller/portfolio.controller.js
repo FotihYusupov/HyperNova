@@ -4,7 +4,7 @@ const filterByLang = require("../utils/filterByLang");
 
 exports.getAll = async (req, res) => {
   try {
-    const data = await paginate(Portfolio, req.query, "portfolio");
+    const data = await paginate(Portfolio, req.query, "portfolio", 'images');
     const result = filterByLang(data.data, req.query.lang, 'projectName', 'client');
     data.data = result;
     return res.json(data);
@@ -15,7 +15,6 @@ exports.getAll = async (req, res) => {
 
 exports.addPortfolio = async (req, res) => {
   try {
-    req.body.images = req.images;
     const newPortfolio = new Portfolio({
       ...req.body,
     });

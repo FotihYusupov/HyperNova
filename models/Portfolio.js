@@ -37,10 +37,10 @@ const PortfolioSchema = new mongoose.Schema({
   webSite: {
     type: String,
   },
-  images: {
-    type: Array,
-    required: true,
-  },
+  images: [{
+    type: mongoose.Types.ObjectId,
+    ref: "image"
+  }],
 });
 
 const Portfolio = mongoose.model("portfolio", PortfolioSchema);
