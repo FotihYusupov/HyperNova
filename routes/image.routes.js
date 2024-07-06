@@ -6,7 +6,7 @@ const uploadMiddleware = require("../middlewares/upload.middleware");
 const imageRoutes = Router();
 
 imageRoutes.get("/", authMiddleware, imageController.getAll);
-imageRoutes.post("/", authMiddleware, uploadMiddleware, imageController.uploadImage);
+imageRoutes.post("/",  uploadMiddleware, imageController.uploadImage);
 imageRoutes.put("/:id", authMiddleware, uploadMiddleware, imageController.editImage);
 
 module.exports = imageRoutes;

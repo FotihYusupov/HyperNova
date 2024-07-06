@@ -4,6 +4,7 @@ const portfolioController = require("../controller/portfolio.controller");
 const portfolioRoutes = Router();
 
 portfolioRoutes.get("/", portfolioController.getAll);
+portfolioRoutes.get("/front",  portfolioController.getFront);
 portfolioRoutes.post("/", authMiddleware, portfolioController.addPortfolio);
 // portfolioRoutes.post('/img', portfolioController.addImg);
 portfolioRoutes.put("/:id", authMiddleware, portfolioController.updatePortfolio);

@@ -13,6 +13,32 @@ exports.getAll = async (req, res) => {
   }
 };
 
+exports.getFront = async (req, res) => {
+  try {
+    let data = await Portfolio.find();
+    const result = [];
+    let typesOrder = [2, 2, 1, 3, 2];
+    let count = 0;
+
+    for(let i = 0; i <= data.length; i++) {
+      const index = data.findIndex(e => e._doc.type == typesOrder[count])
+      result.push(data[index])
+      data.splice(index, 1)
+      if(count == 6) {
+        count = 0
+        continue
+      }
+      count = count + 1
+    }
+
+    return res.status(200).json(result);
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+}
+
+
+
 exports.addPortfolio = async (req, res) => {
   try {
     const newPortfolio = new Portfolio({
