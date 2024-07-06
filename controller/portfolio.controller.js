@@ -31,7 +31,11 @@ exports.getFront = async (req, res) => {
       count = count + 1
     }
 
-    return res.status(200).json(result);
+    const finalData = filterByLang(result, req.query.lang, 'projectName', 'client')
+
+    return res.status(200).json({
+      data: finalData
+    });
   } catch (err) {
     return res.status(400).json(err);
   }
