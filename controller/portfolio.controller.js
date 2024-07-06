@@ -23,6 +23,7 @@ exports.getFront = async (req, res) => {
     for(let i = 0; i <= data.length; i++) {
       const index = data.findIndex(e => e._doc.type == typesOrder[count])
       if(index !== -1) {
+        await data[index].populate("images")
         result.push(data[index])
         data.splice(index, 1)
       }
