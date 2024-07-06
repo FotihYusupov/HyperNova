@@ -22,8 +22,10 @@ exports.getFront = async (req, res) => {
 
     for(let i = 0; i <= data.length; i++) {
       const index = data.findIndex(e => e._doc.type == typesOrder[count])
-      result.push(data[index])
-      data.splice(index, 1)
+      if(index !== -1) {
+        result.push(data[index])
+        data.splice(index, 1)
+      }
       if(count == 6) {
         count = 0
         continue
