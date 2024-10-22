@@ -9,17 +9,9 @@ const TeamSchema = new mongoose.Schema({
     required: true,
     ref: "positions"
   },
-  levelUz: {
+  level: {
     type: String,
     required: true,
-  },
-  levelRu: {
-    type: String,
-    required: true
-  },
-  levelEn: {
-    type: String,
-    required: true
   },
   tools: {
     type: String,
