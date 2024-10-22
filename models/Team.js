@@ -7,7 +7,7 @@ const TeamSchema = new mongoose.Schema({
   position: {
     type: String,
     required: true,
-    ref: "positions"
+    ref: "position"
   },
   level: {
     type: String,
