@@ -46,7 +46,7 @@ exports.upload = async (req, res) => {
       }
       const newFile = new Files({
         fileName: req.file.filename,
-        fileUrl: `${process.env.SERVER_URL}/uploads/${req.file.filename}`,
+        fileUrl: `${process.env.SERVER_URL}uploads/${req.file.filename}`,
       });
       await newFile.save();
       return res.status(200).json({ data: newFile });
