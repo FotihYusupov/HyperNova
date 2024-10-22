@@ -1,12 +1,9 @@
 const { Router } = require("express");
-const authMiddleware = require("../middlewares/auth.middleware");
-const imageController = require("../controller/image.controller");
-const uploadMiddleware = require("../middlewares/upload.middleware");
+const fileController = require("../controller/image.controller");
+const fileRoutes = Router();
 
-const imageRoutes = Router();
+fileRoutes.post("/upload", fileController.upload);
+fileRoutes.get("/upload", fileController.getFiles);
+fileRoutes.delete("/upload/:id", fileController.deleteFile);
 
-imageRoutes.get("/", authMiddleware, imageController.getAll);
-imageRoutes.post("/",  uploadMiddleware, imageController.uploadImage);
-imageRoutes.put("/:id", authMiddleware, uploadMiddleware, imageController.editImage);
-
-module.exports = imageRoutes;
+module.exports = fileRoutes;

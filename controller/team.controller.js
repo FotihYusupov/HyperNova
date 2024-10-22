@@ -15,7 +15,6 @@ exports.getAll = async (req, res) => {
 
 exports.addTeam = async (req, res) => {
   try {
-    req.body.images = req.images;
     const newTeam = new Team({
       ...req.body,
     });
@@ -30,9 +29,6 @@ exports.addTeam = async (req, res) => {
 
 exports.updateTeam = async (req, res) => {
   try {
-    if (req.images) {
-      req.body.images = req.images;
-    }
     const updatedTeam = await Team.findByIdAndUpdate(
       req.params.id,
       { ...req.body },

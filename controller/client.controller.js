@@ -12,7 +12,6 @@ exports.getAll = async (req, res) => {
 
 exports.addClient = async (req, res) => {
   try {
-    req.body.images = req.images;
     const newClient = new Clients({ ...req.body });
     await newClient.save();
     return res.status(201).json({
@@ -26,9 +25,6 @@ exports.addClient = async (req, res) => {
 
 exports.updateClient = async (req, res) => {
   try {
-    if(req.images.length > 0) {
-      req.body.images = req.images;
-    }
     const findClient = await Clients.findByIdAndUpdate(req.params.id,
       { ...req.body },
       { new: true },

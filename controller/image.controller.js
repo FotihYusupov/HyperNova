@@ -1,60 +1,87 @@
-const Images = require("../models/Image");
+const path = require("path");
+const multer = require("multer");
+const Files = require("../models/Image");
+const mongoose = require("mongoose");
 
-exports.getAll = async (req, res) => {
+exports.getFiles = async (req, res) => {
   try {
-    const images = await Images.find();
-    return res.json({
-      data: images,
-    });
-  } catch (err) {
-    return res.status(400).json({
-      message: "Interval server error!",
-      error: err.message,
+    const files = await Files.find();
+    return res.status(200).json({ data: files });
+  } catch (error) {
+    return res.status(500).json({
+      status: "error",
+      message: {
+        uz: error.message,
+      },
     });
   }
 };
 
-exports.uploadImage = async (req, res) => {
+exports.upload = async (req, res) => {
   try {
-    const images = req.images;
-    if (images.length == 0) {
-      return res.status(400).json({
-        message: "Eng kamida 1 ta surat bo'lishi kerak!",
-      });
-    }
-    const newImage = new Images({
-      images: req.images,
+    const publicFolderPath = `./uploads`;
+    const storage = multer.diskStorage({
+      destination: publicFolderPath,
+      filename: (req, file, cb) => {
+        const fileId = new mongoose.Types.ObjectId().toString();
+        const fileExtension = path.extname(file.originalname);
+        const fileName = `${fileId}${fileExtension}`;
+        cb(null, fileName);
+      },
     });
-    await newImage.save();
-    return res.json({
-      data: newImage
-    })
-  } catch (err) {
-    return res.status(400).json({
-      message: "Interval server error!",
-      error: err.message,
+    const upload = multer({ storage }).single("file");
+    upload(req, res, async (error) => {
+      if (error) {
+        return res.status(500).json({ message: error.message });
+      }
+      if (!req.file) {
+        return res.status(400).json({
+          status: "error",
+          message: {
+            uz: "Fayl yuklanmadi",
+            ru: "Файл не загружен",
+            en: "File not uploaded",
+          },
+        });
+      }
+      const newFile = new Files({
+        fileName: req.file.filename,
+        fileUrl: `${process.env.SERVER_URL}/uploads/${req.file.filename}`,
+      });
+      await newFile.save();
+      return res.status(200).json({ data: newFile });
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: "error",
+      message: {
+        uz: error.message,
+      },
     });
   }
 };
 
-exports.editImage = async (req, res) => {
+exports.deleteFile = async (req, res) => {
   try {
-    const images = req.images;
-    if (images.length == 0) {
-      return res.status(400).json({
-        message: "Eng kamida 1 ta surat bo'lishi kerak!",
-      });
-    }
-    const findImage = await Images.findById(req.params.id);
-    if (!findImage) {
+    const file = await Files.findById(req.params.id);
+    if (!file) {
       return res.status(404).json({
-        message: "Image Not Found!",
+        status: "error",
+        message: {
+          uz: "Fayl topilmadi",
+          ru: "Файл не найден",
+          en: "File not found",
+        },
       });
     }
-  } catch (err) {
-    return res.status(400).json({
-      message: "Interval server error!",
-      error: err.message,
+    await file.deleteOne();
+    return res.json({ data: file });
+  } catch (error) {
+    return res.status(500).json({
+      status: "error",
+      message: {
+        uz: error.message,
+      },
     });
   }
 };

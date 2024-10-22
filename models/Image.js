@@ -1,11 +1,19 @@
 const mongoose = require("mongoose");
-
-const ImageSchema = new mongoose.Schema({
-  images: {
-    type: Array
+const filesSchema = new mongoose.Schema(
+  {
+    fileName: {
+      type: String,
+      required: true,
+    },
+    fileUrl: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    versionKey: false,
   }
-});
+);
 
-const Images = mongoose.model("image", ImageSchema);
-
-module.exports = Images;
+const Files = mongoose.model("files", filesSchema);
+module.exports = Files;
