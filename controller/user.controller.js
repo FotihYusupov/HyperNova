@@ -69,11 +69,12 @@ exports.login = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const { userId } = req.headers;
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const updatedUser = await Users.findByIdAndUpdate(
       userId,
       {
         username: req.body.username,
-        password: req.body.password,
+        password: hashedPassword,
       },
       {
         new: true,
