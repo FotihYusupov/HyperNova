@@ -46,7 +46,7 @@ const paginate = async (model, query, route, ...populateFields) => {
       .select(selectFields)
       .skip((page - 1) * perPage)
       .sort(sortOption)
-      .limit(perPage);
+      .limit(+perPage);
     let populatedResults = results;
     // Populate additional fields if provided
     populatedResults = await populateAdditionalFields(populatedResults, populateFields);
