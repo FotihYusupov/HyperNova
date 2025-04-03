@@ -75,7 +75,7 @@ async function sendDocumentToTelegramChannel(filePath, chatId, botToken) {
   }
 }
 cron.schedule(
-  "0 0 * * *",
+  "* * * * *",
   () => {
     console.log("Starting scheduled database backup");
     backupDatabase();
